@@ -10,3 +10,9 @@ Site web de divertissement. Reprenant l'idée du site [9gag.com](https://www.9ga
 - Différentes catégories
 - Commentaires sur les posts
 - Like/Dislike posts
+
+## Auteurs
+
+- Laurent Gander
+- Thibaut Piquerez
+- Sylvain Renaud
