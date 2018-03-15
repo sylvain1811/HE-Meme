@@ -27,17 +27,13 @@
                     <h:inputText id="datePost" value="#{postsController.selected.datePost}" title="#{bundle.EditPostsTitle_datePost}" >
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
-                    <h:outputLabel value="#{bundle.EditPostsLabel_comments}" for="comments" />
-                    <h:selectOneMenu id="comments" value="#{postsController.selected.comments}" title="#{bundle.EditPostsTitle_comments}" >
-                        <f:selectItems value="#{commentsController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.EditPostsLabel_categoryId}" for="categoryId" />
                     <h:selectOneMenu id="categoryId" value="#{postsController.selected.categoryId}" title="#{bundle.EditPostsTitle_categoryId}" required="true" requiredMessage="#{bundle.EditPostsRequiredMessage_categoryId}">
-                        <f:selectItems value="#{categoryController.itemsAvailableSelectOne}"/>
+                        <f:selectItems value="#{categoriesController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.EditPostsLabel_userId}" for="userId" />
                     <h:selectOneMenu id="userId" value="#{postsController.selected.userId}" title="#{bundle.EditPostsTitle_userId}" required="true" requiredMessage="#{bundle.EditPostsRequiredMessage_userId}">
-                        <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="#{postsController.update}" value="#{bundle.EditPostsSaveLink}"/>

@@ -1,9 +1,9 @@
 package ch.hearc.hememe.controllers;
 
-import ch.hearc.hememe.entities.Category;
+import ch.hearc.hememe.entities.Categories;
 import ch.hearc.hememe.controllers.util.JsfUtil;
 import ch.hearc.hememe.controllers.util.PaginationHelper;
-import ch.hearc.hememe.facades.CategoryFacade;
+import ch.hearc.hememe.facades.CategoriesFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,32 +18,32 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-
-@Named("categoryController")
+@Named("categoriesController")
 @SessionScoped
-public class CategoryController implements Serializable {
+public class CategoriesController implements Serializable {
 
-
-    private Category current;
+    private Categories current;
     private DataModel items = null;
-    @EJB private ch.hearc.hememe.facades.CategoryFacade ejbFacade;
+    @EJB
+    private ch.hearc.hememe.facades.CategoriesFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public CategoryController() {
+    public CategoriesController() {
     }
 
-    public Category getSelected() {
+    public Categories getSelected() {
         if (current == null) {
-            current = new Category();
+            current = new Categories();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private CategoryFacade getFacade() {
+    private CategoriesFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -55,7 +55,7 @@ public class CategoryController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -68,13 +68,13 @@ public class CategoryController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Category)getItems().getRowData();
+        current = (Categories) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Category();
+        current = new Categories();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class CategoryController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CategoryCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CategoriesCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class CategoryController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Category)getItems().getRowData();
+        current = (Categories) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class CategoryController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CategoryUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CategoriesUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class CategoryController implements Serializable {
     }
 
     public String destroy() {
-        current = (Category)getItems().getRowData();
+        current = (Categories) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class CategoryController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CategoryDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CategoriesDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -142,14 +142,14 @@ public class CategoryController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -188,21 +188,21 @@ public class CategoryController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Category getCategory(java.lang.Integer id) {
+    public Categories getCategories(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass=Category.class)
-    public static class CategoryControllerConverter implements Converter {
+    @FacesConverter(forClass = Categories.class)
+    public static class CategoriesControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            CategoryController controller = (CategoryController)facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "categoryController");
-            return controller.getCategory(getKey(value));
+            CategoriesController controller = (CategoriesController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "categoriesController");
+            return controller.getCategories(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -222,11 +222,11 @@ public class CategoryController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Category) {
-                Category o = (Category) object;
+            if (object instanceof Categories) {
+                Categories o = (Categories) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Category.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Categories.class.getName());
             }
         }
 

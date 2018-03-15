@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,7 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author sylvain.renaud
  */
 @Entity
-@Table(name = "comments")
+@Table(catalog = "hememedb", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id"})
+    , @UniqueConstraint(columnNames = {"post_id"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comments.findAll", query = "SELECT c FROM Comments c")
@@ -39,21 +42,21 @@ public class Comments implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4096)
-    @Column(name = "content")
+    @Column(nullable = false, length = 4096)
     private String content;
     @Column(name = "nb_like")
     private Integer nbLike;
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
     private Posts postId;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
-    private User userId;
+    private Users userId;
 
     public Comments() {
     }
@@ -99,11 +102,11 @@ public class Comments implements Serializable {
         this.postId = postId;
     }
 
-    public User getUserId() {
+    public Users getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Users userId) {
         this.userId = userId;
     }
 

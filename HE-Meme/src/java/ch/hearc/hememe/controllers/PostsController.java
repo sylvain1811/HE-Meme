@@ -18,15 +18,14 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-
 @Named("postsController")
 @SessionScoped
 public class PostsController implements Serializable {
 
-
     private Posts current;
     private DataModel items = null;
-    @EJB private ch.hearc.hememe.facades.PostsFacade ejbFacade;
+    @EJB
+    private ch.hearc.hememe.facades.PostsFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -44,6 +43,7 @@ public class PostsController implements Serializable {
     private PostsFacade getFacade() {
         return ejbFacade;
     }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -55,7 +55,7 @@ public class PostsController implements Serializable {
 
                 @Override
                 public DataModel createPageDataModel() {
-                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem()+getPageSize()}));
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
                 }
             };
         }
@@ -68,7 +68,7 @@ public class PostsController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Posts)getItems().getRowData();
+        current = (Posts) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
@@ -91,7 +91,7 @@ public class PostsController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Posts)getItems().getRowData();
+        current = (Posts) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -108,7 +108,7 @@ public class PostsController implements Serializable {
     }
 
     public String destroy() {
-        current = (Posts)getItems().getRowData();
+        current = (Posts) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -142,14 +142,14 @@ public class PostsController implements Serializable {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
             // selected index cannot be bigger than number of items:
-            selectedItemIndex = count-1;
+            selectedItemIndex = count - 1;
             // go to previous page if last page disappeared:
             if (pagination.getPageFirstItem() >= count) {
                 pagination.previousPage();
             }
         }
         if (selectedItemIndex >= 0) {
-            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex+1}).get(0);
+            current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
 
@@ -192,7 +192,7 @@ public class PostsController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass=Posts.class)
+    @FacesConverter(forClass = Posts.class)
     public static class PostsControllerConverter implements Converter {
 
         @Override
@@ -200,7 +200,7 @@ public class PostsController implements Serializable {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            PostsController controller = (PostsController)facesContext.getApplication().getELResolver().
+            PostsController controller = (PostsController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "postsController");
             return controller.getPosts(getKey(value));
         }
@@ -226,7 +226,7 @@ public class PostsController implements Serializable {
                 Posts o = (Posts) object;
                 return getStringKey(o.getId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: "+Posts.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Posts.class.getName());
             }
         }
 

@@ -27,7 +27,7 @@
                     </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreateCommentsLabel_userId}" for="userId" />
                     <h:selectOneMenu id="userId" value="#{commentsController.selected.userId}" title="#{bundle.CreateCommentsTitle_userId}" required="true" requiredMessage="#{bundle.CreateCommentsRequiredMessage_userId}">
-                        <f:selectItems value="#{userController.itemsAvailableSelectOne}"/>
+                        <f:selectItems value="#{usersController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <br />

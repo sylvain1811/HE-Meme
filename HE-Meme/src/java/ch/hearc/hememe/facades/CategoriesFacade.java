@@ -5,7 +5,7 @@
  */
 package ch.hearc.hememe.facades;
 
-import ch.hearc.hememe.entities.Comments;
+import ch.hearc.hememe.entities.Categories;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author sylvain.renaud
  */
 @Stateless
-public class CommentsFacade extends AbstractFacade<Comments> {
+public class CategoriesFacade extends AbstractFacade<Categories> {
 
     @PersistenceContext(unitName = "HE-MemePU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class CommentsFacade extends AbstractFacade<Comments> {
         return em;
     }
 
-    public CommentsFacade() {
-        super(Comments.class);
+    public CategoriesFacade() {
+        super(Categories.class);
     }
     
 }

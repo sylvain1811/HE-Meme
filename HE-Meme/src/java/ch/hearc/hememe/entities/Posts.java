@@ -22,6 +22,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,7 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author sylvain.renaud
  */
 @Entity
-@Table(name = "posts")
+@Table(catalog = "hememedb", schema = "", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"image_name"})
+    , @UniqueConstraint(columnNames = {"user_id"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Posts.findAll", query = "SELECT p FROM Posts p")
@@ -46,31 +49,29 @@ public class Posts implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "image_name")
+    @Column(name = "image_name", nullable = false, length = 45)
     private String imageName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "title")
+    @Column(nullable = false, length = 45)
     private String title;
     @Column(name = "nb_like")
     private Integer nbLike;
     @Column(name = "date_post")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datePost;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "postId")
-    private Comments comments;
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private Category categoryId;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private Categories categoryId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @OneToOne(optional = false)
-    private User userId;
+    private Users userId;
 
     public Posts() {
     }
@@ -125,27 +126,19 @@ public class Posts implements Serializable {
         this.datePost = datePost;
     }
 
-    public Comments getComments() {
-        return comments;
-    }
-
-    public void setComments(Comments comments) {
-        this.comments = comments;
-    }
-
-    public Category getCategoryId() {
+    public Categories getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Category categoryId) {
+    public void setCategoryId(Categories categoryId) {
         this.categoryId = categoryId;
     }
 
-    public User getUserId() {
+    public Users getUserId() {
         return userId;
     }
 
-    public void setUserId(User userId) {
+    public void setUserId(Users userId) {
         this.userId = userId;
     }
 
