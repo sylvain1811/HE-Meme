@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -29,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author sylvain.renaud
  */
 @Entity
-@Table(catalog = "hememedb", schema = "")
+@Table(name = "users")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
@@ -44,25 +46,32 @@ public class Users implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 16)
-    @Column(nullable = false, length = 16)
+    @Column(name = "username")
     private String username;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
-    @Column(length = 255)
+    @Column(name = "email")
     private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 32)
-    @Column(nullable = false, length = 32)
+    @Column(name = "password")
     private String password;
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Comments comments;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
+    private Posts posts;
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @ManyToOne
+    private Groups groupId;
 
     public Users() {
     }
@@ -115,6 +124,30 @@ public class Users implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Comments getComments() {
+        return comments;
+    }
+
+    public void setComments(Comments comments) {
+        this.comments = comments;
+    }
+
+    public Posts getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Posts posts) {
+        this.posts = posts;
+    }
+
+    public Groups getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Groups groupId) {
+        this.groupId = groupId;
     }
 
     @Override

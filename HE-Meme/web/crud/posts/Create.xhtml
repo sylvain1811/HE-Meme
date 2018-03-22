@@ -27,6 +27,10 @@
                     <h:inputText id="datePost" value="#{postsController.selected.datePost}" title="#{bundle.CreatePostsTitle_datePost}" >
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
+                    <h:outputLabel value="#{bundle.CreatePostsLabel_comments}" for="comments" />
+                    <h:selectOneMenu id="comments" value="#{postsController.selected.comments}" title="#{bundle.CreatePostsTitle_comments}" >
+                        <f:selectItems value="#{commentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                     <h:outputLabel value="#{bundle.CreatePostsLabel_categoryId}" for="categoryId" />
                     <h:selectOneMenu id="categoryId" value="#{postsController.selected.categoryId}" title="#{bundle.CreatePostsTitle_categoryId}" required="true" requiredMessage="#{bundle.CreatePostsRequiredMessage_categoryId}">
                         <f:selectItems value="#{categoriesController.itemsAvailableSelectOne}"/>

@@ -8,7 +8,6 @@ package ch.hearc.hememe.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -28,13 +26,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author sylvain.renaud
  */
 @Entity
-@Table(name = "categories")
+@Table(name = "groups")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Categories.findAll", query = "SELECT c FROM Categories c")
-    , @NamedQuery(name = "Categories.findById", query = "SELECT c FROM Categories c WHERE c.id = :id")
-    , @NamedQuery(name = "Categories.findByName", query = "SELECT c FROM Categories c WHERE c.name = :name")})
-public class Categories implements Serializable {
+    @NamedQuery(name = "Groups.findAll", query = "SELECT g FROM Groups g")
+    , @NamedQuery(name = "Groups.findById", query = "SELECT g FROM Groups g WHERE g.id = :id")
+    , @NamedQuery(name = "Groups.findByName", query = "SELECT g FROM Groups g WHERE g.name = :name")})
+public class Groups implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,24 +40,17 @@ public class Categories implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 45)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoryId")
-    private List<Posts> postsList;
+    @OneToMany(mappedBy = "groupId")
+    private List<Users> usersList;
 
-    public Categories() {
+    public Groups() {
     }
 
-    public Categories(Integer id) {
+    public Groups(Integer id) {
         this.id = id;
-    }
-
-    public Categories(Integer id, String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Integer getId() {
@@ -79,12 +70,12 @@ public class Categories implements Serializable {
     }
 
     @XmlTransient
-    public List<Posts> getPostsList() {
-        return postsList;
+    public List<Users> getUsersList() {
+        return usersList;
     }
 
-    public void setPostsList(List<Posts> postsList) {
-        this.postsList = postsList;
+    public void setUsersList(List<Users> usersList) {
+        this.usersList = usersList;
     }
 
     @Override
@@ -97,10 +88,10 @@ public class Categories implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Categories)) {
+        if (!(object instanceof Groups)) {
             return false;
         }
-        Categories other = (Categories) object;
+        Groups other = (Groups) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +100,7 @@ public class Categories implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.hearc.hememe.entities.Categories[ id=" + id + " ]";
+        return "ch.hearc.hememe.entities.Groups[ id=" + id + " ]";
     }
     
 }

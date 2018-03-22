@@ -27,6 +27,18 @@
                     <h:inputText id="createTime" value="#{usersController.selected.createTime}" title="#{bundle.EditUsersTitle_createTime}" >
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_comments}" for="comments" />
+                    <h:selectOneMenu id="comments" value="#{usersController.selected.comments}" title="#{bundle.EditUsersTitle_comments}" >
+                        <f:selectItems value="#{commentsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_posts}" for="posts" />
+                    <h:selectOneMenu id="posts" value="#{usersController.selected.posts}" title="#{bundle.EditUsersTitle_posts}" >
+                        <f:selectItems value="#{postsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditUsersLabel_groupId}" for="groupId" />
+                    <h:selectOneMenu id="groupId" value="#{usersController.selected.groupId}" title="#{bundle.EditUsersTitle_groupId}" >
+                        <f:selectItems value="#{groupsController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="#{usersController.update}" value="#{bundle.EditUsersSaveLink}"/>
                 <br />

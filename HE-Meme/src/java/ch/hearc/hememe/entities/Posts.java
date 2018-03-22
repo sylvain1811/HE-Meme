@@ -22,7 +22,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,9 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author sylvain.renaud
  */
 @Entity
-@Table(catalog = "hememedb", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"image_name"})
-    , @UniqueConstraint(columnNames = {"user_id"})})
+@Table(name = "posts")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Posts.findAll", query = "SELECT p FROM Posts p")
@@ -49,27 +46,29 @@ public class Posts implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "image_name", nullable = false, length = 45)
+    @Column(name = "image_name")
     private String imageName;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(nullable = false, length = 45)
+    @Column(name = "title")
     private String title;
     @Column(name = "nb_like")
     private Integer nbLike;
     @Column(name = "date_post")
     @Temporal(TemporalType.TIMESTAMP)
     private Date datePost;
-    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "postId")
+    private Comments comments;
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Categories categoryId;
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(optional = false)
     private Users userId;
 
@@ -124,6 +123,14 @@ public class Posts implements Serializable {
 
     public void setDatePost(Date datePost) {
         this.datePost = datePost;
+    }
+
+    public Comments getComments() {
+        return comments;
+    }
+
+    public void setComments(Comments comments) {
+        this.comments = comments;
     }
 
     public Categories getCategoryId() {

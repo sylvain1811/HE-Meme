@@ -17,7 +17,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -27,9 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author sylvain.renaud
  */
 @Entity
-@Table(catalog = "hememedb", schema = "", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"user_id"})
-    , @UniqueConstraint(columnNames = {"post_id"})})
+@Table(name = "comments")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comments.findAll", query = "SELECT c FROM Comments c")
@@ -42,19 +39,19 @@ public class Comments implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4096)
-    @Column(nullable = false, length = 4096)
+    @Column(name = "content")
     private String content;
     @Column(name = "nb_like")
     private Integer nbLike;
-    @JoinColumn(name = "post_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
     @OneToOne(optional = false)
     private Posts postId;
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(optional = false)
     private Users userId;
 
