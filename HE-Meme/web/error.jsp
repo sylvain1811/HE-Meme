@@ -12,5 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-Sorry, you made an Error. Please try again</a>       </body>
+        Sorry, you made an Error. Please try again</a>       
+</body>
 </html>
