@@ -7,6 +7,7 @@ package ch.hearc.hememe.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -25,6 +25,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -65,13 +66,12 @@ public class Users implements Serializable {
     @Column(name = "create_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
+    @ManyToMany(mappedBy = "usersList")
+    private List<Groups> groupsList;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
     private Comments comments;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "userId")
     private Posts posts;
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
-    @ManyToOne
-    private Groups groupId;
 
     public Users() {
     }
@@ -126,6 +126,15 @@ public class Users implements Serializable {
         this.createTime = createTime;
     }
 
+    @XmlTransient
+    public List<Groups> getGroupsList() {
+        return groupsList;
+    }
+
+    public void setGroupsList(List<Groups> groupsList) {
+        this.groupsList = groupsList;
+    }
+
     public Comments getComments() {
         return comments;
     }
@@ -140,14 +149,6 @@ public class Users implements Serializable {
 
     public void setPosts(Posts posts) {
         this.posts = posts;
-    }
-
-    public Groups getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Groups groupId) {
-        this.groupId = groupId;
     }
 
     @Override
