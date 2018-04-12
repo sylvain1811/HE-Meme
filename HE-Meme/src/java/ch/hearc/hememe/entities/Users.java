@@ -60,7 +60,7 @@ public class Users implements Serializable {
     private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 32)
+    @Size(min = 1, max = 255)
     @Column(name = "password")
     private String password;
     @Column(name = "create_time")
