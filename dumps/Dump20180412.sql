@@ -155,6 +155,7 @@ CREATE TABLE `user_group` (
 
 LOCK TABLES `user_group` WRITE;
 /*!40000 ALTER TABLE `user_group` DISABLE KEYS */;
+INSERT INTO `user_group` VALUES (1,1),(2,2);
 /*!40000 ALTER TABLE `user_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,15 +168,12 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) DEFAULT NULL,
   `username` varchar(16) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `password` varchar(32) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `fk_group_idx` (`group_id`),
-  CONSTRAINT `fk_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -184,9 +182,41 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,1,'francknoir','franck.noir@rts.ch','5f4dcc3b5aa765d61d8327deb882cf99',NULL);
+INSERT INTO `users` VALUES (1,'francknoir','franck.noir@rts.ch','5f4dcc3b5aa765d61d8327deb882cf99',NULL),(2,'admin1','admin1@hememe.ch','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4','2018-04-12 09:08:47');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Temporary view structure for view `view_users_groups`
+--
+
+DROP TABLE IF EXISTS `view_users_groups`;
+/*!50001 DROP VIEW IF EXISTS `view_users_groups`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `view_users_groups` AS SELECT 
+ 1 AS `groupname`,
+ 1 AS `username`,
+ 1 AS `password`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Final view structure for view `view_users_groups`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_users_groups`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_users_groups` AS select `g`.`name` AS `groupname`,`u`.`username` AS `username`,`u`.`password` AS `password` from ((`user_group` `ug` join `users` `u`) join `groups` `g`) where ((`u`.`id` = `ug`.`user_id`) and (`g`.`id` = `ug`.`group_id`)) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -197,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-11 15:01:46
+-- Dump completed on 2018-04-12 12:12:40

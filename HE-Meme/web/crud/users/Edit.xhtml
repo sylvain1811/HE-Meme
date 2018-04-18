@@ -35,10 +35,6 @@
                     <h:selectOneMenu id="posts" value="#{usersController.selected.posts}" title="#{bundle.EditUsersTitle_posts}" >
                         <f:selectItems value="#{postsController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditUsersLabel_groupId}" for="groupId" />
-                    <h:selectOneMenu id="groupId" value="#{usersController.selected.groupId}" title="#{bundle.EditUsersTitle_groupId}" >
-                        <f:selectItems value="#{groupsController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="#{usersController.update}" value="#{bundle.EditUsersSaveLink}"/>
                 <br />
