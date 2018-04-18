@@ -8,85 +8,87 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">HE-Meme</ui:insert></title>
-        <h:outputStylesheet library="css" name="bootstrap/dist/css/bootstrap.min.css"/>        
+        <!--        <h:outputStylesheet library="css" name="bootstrap/dist/css/bootstrap.min.css"/>-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
     </h:head>
 
     <h:body>
-        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-           <div class="container-fluid">
-               <div class="navbar-header">
-                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                       <span class="icon-bar"></span>
-                       <span class="icon-bar"></span>
-                       <span class="icon-bar"></span>
-                   </button>
-                   <a class="navbar-brand" href="#">HE-Meme</a>
-               </div>
-               <div class="collapse navbar-collapse">
-                   <ul class="nav navbar-nav">
-                       <li class="active"><a href="#">Home</a></li>
-                   </ul>
-                   <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Search"/>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">HE-Meme</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <form class="form-inline">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </ul>
+
+                </div>
+                
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <h:link outcome="faces/login.xhtml" value="Login" rendered="#{request.remoteUser}"/>
+                        </li>
+                        <li class="nav-item">
+                            <h:link outcome="" value="Register" rendered="#{request.remoteUser}"/>
+                        </li>
+                    </ul>
+                
+            </div>
+        </nav>
+        <!-- /.navbar -->
+
+          <div class="container-fluid">
+            <div class="row row-offcanvas row-offcanvas-left">
+                <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+                    <div class="sidebar-nav">
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-comment-o"></i> Lorem ipsum
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-search"></i> Lorem ipsum
+                            </a>
+                            <a href="#" class="list-group-item">
+                                <i class="fa fa-user"></i> Lorem ipsum
+                            </a>
+                        </div>
+
                     </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                  </form>
-                   <ul class="nav navbar-nav navbar-right">
-                       <li><a href="#about">Sign Up</a></li>
-                       <li><a href="#contact">Sign In</a></li>
-                   </ul>
-               </div>
-               <!-- /.nav-collapse -->
-           </div>
-           <!-- /.container -->
-       </div>
-       <!-- /.navbar -->
+                    <!--/.well -->
+                </div>
+                <!--/span-->
 
-       <br></br>
-
-       <div class="container-fluid">
-           <div class="row row-offcanvas row-offcanvas-left">
-               <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                   <div class="sidebar-nav">
-                       <br></br>
-                       <br></br>
-                       <br></br>
-                       <div class="list-group">
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-comment-o"></i> Lorem ipsum
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-search"></i> Lorem ipsum
-                        </a>
-                        <a href="#" class="list-group-item">
-                            <i class="fa fa-user"></i> Lorem ipsum
-                        </a>
-                       </div>
-                       
-                   </div>
-                   <!--/.well -->
-               </div>
-               <!--/span-->
-                    
-               <div class="col-xs-4 col-sm-9">
-                <br></br>
-                <div class="">
+                <div class="col-xs-4 col-sm-9">
                     <br></br>
-                    <ui:insert name="body">Default Body</ui:insert>
-                </div>
-           
-                </div>
-           </div>
-           <!--/row-->
-           <hr></hr>
-           <footer>
-               <p>© HE-Meme 2018</p>
-           </footer>
+                    <div class="">
+                        <br></br>
+                        <ui:insert name="body">Default Body</ui:insert>
+                    </div>
 
-       </div>
-      
-       <!--/.container-->
+                </div>
+            </div>
+            <!--/row-->
+            <hr></hr>
+            <footer>
+                <p>© HE-Meme 2018</p>
+            </footer>
+
+        </div>
+
+        <!--/.container-->
     </h:body>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 </html>
-       
