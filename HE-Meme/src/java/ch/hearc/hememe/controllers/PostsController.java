@@ -3,6 +3,7 @@ package ch.hearc.hememe.controllers;
 import ch.hearc.hememe.entities.Posts;
 import ch.hearc.hememe.controllers.util.JsfUtil;
 import ch.hearc.hememe.controllers.util.PaginationHelper;
+import ch.hearc.hememe.facades.CommentsFacade;
 import ch.hearc.hememe.facades.PostsFacade;
 
 import java.io.Serializable;
@@ -61,7 +62,7 @@ public class PostsController implements Serializable {
         }
         return pagination;
     }
-
+    
     public String prepareList() {
         recreateModel();
         return "List";
