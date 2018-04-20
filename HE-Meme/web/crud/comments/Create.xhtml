@@ -14,7 +14,7 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" class="form-inline">
                     <h:outputLabel value="#{bundle.CreateCommentsLabel_id}" for="id" />
                     <h:inputText id="id" value="#{commentsController.selected.id}" title="#{bundle.CreateCommentsTitle_id}" required="true" requiredMessage="#{bundle.CreateCommentsRequiredMessage_id}"/>
                     <h:outputLabel value="#{bundle.CreateCommentsLabel_content}" for="content" />
