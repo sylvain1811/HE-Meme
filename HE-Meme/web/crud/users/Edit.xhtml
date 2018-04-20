@@ -21,20 +21,6 @@
                     <h:inputText id="username" value="#{usersController.selected.username}" title="#{bundle.EditUsersTitle_username}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_username}"/>
                     <h:outputLabel value="#{bundle.EditUsersLabel_email}" for="email" />
                     <h:inputText id="email" value="#{usersController.selected.email}" title="#{bundle.EditUsersTitle_email}" />
-                    <h:outputLabel value="#{bundle.EditUsersLabel_password}" for="password" />
-                    <h:inputText id="password" value="#{usersController.selected.password}" title="#{bundle.EditUsersTitle_password}" required="true" requiredMessage="#{bundle.EditUsersRequiredMessage_password}"/>
-                    <h:outputLabel value="#{bundle.EditUsersLabel_createTime}" for="createTime" />
-                    <h:inputText id="createTime" value="#{usersController.selected.createTime}" title="#{bundle.EditUsersTitle_createTime}" >
-                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.EditUsersLabel_comments}" for="comments" />
-                    <h:selectOneMenu id="comments" value="#{usersController.selected.comments}" title="#{bundle.EditUsersTitle_comments}" >
-                        <f:selectItems value="#{commentsController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.EditUsersLabel_posts}" for="posts" />
-                    <h:selectOneMenu id="posts" value="#{usersController.selected.posts}" title="#{bundle.EditUsersTitle_posts}" >
-                        <f:selectItems value="#{postsController.itemsAvailableSelectOne}"/>
-                    </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="#{usersController.update}" value="#{bundle.EditUsersSaveLink}"/>
                 <br />
