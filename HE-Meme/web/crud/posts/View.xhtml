@@ -22,41 +22,37 @@
                             <p><span class="badge badge-secondary">#{postsController.selected.nbLike}</span> likes</p>
                         </div>
                         <div class="col-sm-3">
-                            <a href="#">#{postsController.selected.categoryId.name}</a>
+                            <a href="../categories/List.xhtml">#{postsController.selected.categoryId.name}</a>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <p>#{postsController.selected.imageName}</p>
+                            <img src="../../resources/image/#{postsController.selected.imageName}" alt="Card image cap" width="60%"/>
                         </div>
                     </div>
                 </div>
-                <br />
-                <h:commandLink action="#{postsController.destroyAndView}" value="#{bundle.ViewPostsDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewPostsEditLink}"/>
-                <br />
-                <h:commandLink action="#{postsController.prepareCreate}" value="#{bundle.ViewPostsCreateLink}" />
-                <br />
-                <h:commandLink action="#{postsController.prepareList}" value="#{bundle.ViewPostsShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewPostsIndexLink}"/>
-
             </h:form>
 
-            <ui:repeat value="#{postsController.selected.comments}" var="item">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">#{item.userId.username}</h5>
-                        <p class="card-text">#{item.content}</p>
-                        <p>#{item.nbLike}</p>
-                        <a href="#" class="card-link">Up</a>
-                        <a href="#" class="card-link">Down</a>
-                    </div>
+            <h2 class="h3 mt-4" >Comments</h2>
+
+            <h:form class="input-group mb-2" style="width: 60%" rendered="#{request.remoteUser != null}">
+                <h:inputText class="form-control" id="content" value="#{commentsController.selected.content}" required="true" />
+                <div class="input-group-append">
+                    <h:commandButton class="btn btn-secondary" action="#{commentsController.addCommentsToPosts(postsController.selected,usersController.getUsersByName(request.remoteUser))}" value="add"/>
                 </div>
-            </ui:repeat>
+            </h:form>
+
+            <div class="list-group" style="width: 60%">
+                <ui:repeat value="#{postsController.selected.comments}" var="item">
+                    <div href="#" class="list-group-item flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <p class="mb-1"><strong>#{item.userId.username}</strong></p>
+                            <small><span class="badge badge-secondary">#{item.nbLike}</span> likes</small>
+                        </div>
+                        <p class="mb-1">#{item.content}</p>
+                    </div>
+                </ui:repeat>
+            </div>
         </ui:define>
     </ui:composition>
 </html>

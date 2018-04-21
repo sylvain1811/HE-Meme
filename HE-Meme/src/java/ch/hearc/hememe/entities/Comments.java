@@ -42,8 +42,6 @@ public class Comments implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 4096)
     @Column(name = "content")
     private String content;
     @Column(name = "nb_like")

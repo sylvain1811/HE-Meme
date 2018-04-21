@@ -12,12 +12,14 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 
 @Named("postsController")
 @SessionScoped
@@ -62,7 +64,7 @@ public class PostsController implements Serializable {
         }
         return pagination;
     }
-    
+
     public String prepareList() {
         recreateModel();
         return "List";
@@ -191,6 +193,12 @@ public class PostsController implements Serializable {
 
     public Posts getPosts(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+
+    public DataModel searchByTitle() {
+
+        String title = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("search_name");
+        return new ListDataModel(ejbFacade.searchByTitle(title));
     }
 
     @FacesConverter(forClass = Posts.class)

@@ -3,7 +3,10 @@ package ch.hearc.hememe.controllers;
 import ch.hearc.hememe.entities.Comments;
 import ch.hearc.hememe.controllers.util.JsfUtil;
 import ch.hearc.hememe.controllers.util.PaginationHelper;
+import ch.hearc.hememe.entities.Posts;
+import ch.hearc.hememe.entities.Users;
 import ch.hearc.hememe.facades.CommentsFacade;
+import ch.hearc.hememe.facades.UsersFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -17,6 +20,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.faces.view.ViewScoped;
 
 @Named("commentsController")
 @SessionScoped
@@ -76,11 +80,24 @@ public class CommentsController implements Serializable {
     public String prepareCreate() {
         current = new Comments();
         selectedItemIndex = -1;
-        return "Create";
+        return "";
+    }
+
+    public void addCommentsToPosts(Posts post, Users user) {
+        Comments comments = new Comments();
+        comments.setPostId(post);
+        comments.setUserId(user);
+        comments.setContent(current.getContent());
+        comments.setNbLike(0);
+        getFacade().create(comments);
     }
 
     public String create() {
         try {
+            if (current == null) {
+                current = new Comments();
+                selectedItemIndex = -1;
+            }
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CommentsCreated"));
             return prepareCreate();

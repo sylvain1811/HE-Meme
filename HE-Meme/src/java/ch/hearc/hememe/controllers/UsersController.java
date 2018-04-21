@@ -188,6 +188,11 @@ public class UsersController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
+    public Users getUsersByName(String username)
+    {
+        return ejbFacade.getByUsername(username);
+    }
+    
     public Users getUsers(java.lang.Integer id) {
         return ejbFacade.find(id);
     }

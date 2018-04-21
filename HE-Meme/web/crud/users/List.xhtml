@@ -20,7 +20,7 @@
                     <h:commandLink action="#{usersController.previous}" value="#{bundle.Previous} #{usersController.pagination.pageSize}" rendered="#{usersController.pagination.hasPreviousPage}"/>&nbsp;
                     <h:commandLink action="#{usersController.next}" value="#{bundle.Next} #{usersController.pagination.pageSize}" rendered="#{usersController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{usersController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px" class="table">
-                        
+
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListUsersTitle_username}"/>
@@ -33,7 +33,7 @@
                             </f:facet>
                             <h:outputText value="#{item.email}"/>
                         </h:column>
-                      
+
                         <h:column>
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>

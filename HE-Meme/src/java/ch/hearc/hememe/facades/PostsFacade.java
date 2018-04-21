@@ -6,6 +6,7 @@
 package ch.hearc.hememe.facades;
 
 import ch.hearc.hememe.entities.Posts;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +29,9 @@ public class PostsFacade extends AbstractFacade<Posts> {
     public PostsFacade() {
         super(Posts.class);
     }
-    
+
+    public List<Posts> searchByTitle(String title) {
+        return (List<Posts>) em.createNamedQuery("Posts.searchByTitle").setParameter("title", "%" + title + "%").getResultList();
+    }
+
 }

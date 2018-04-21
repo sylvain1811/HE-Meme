@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Posts.findByImageName", query = "SELECT p FROM Posts p WHERE p.imageName = :imageName")
     , @NamedQuery(name = "Posts.findByTitle", query = "SELECT p FROM Posts p WHERE p.title = :title")
     , @NamedQuery(name = "Posts.findByNbLike", query = "SELECT p FROM Posts p WHERE p.nbLike = :nbLike")
+    , @NamedQuery(name = "Posts.searchByTitle", query = "SELECT p FROM Posts p WHERE p.title LIKE :title")
     , @NamedQuery(name = "Posts.findByDatePost", query = "SELECT p FROM Posts p WHERE p.datePost = :datePost")})
 public class Posts implements Serializable {
 
