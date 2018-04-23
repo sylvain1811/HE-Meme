@@ -3,12 +3,14 @@ package ch.hearc.hememe.controllers;
 import ch.hearc.hememe.entities.Posts;
 import ch.hearc.hememe.controllers.util.JsfUtil;
 import ch.hearc.hememe.controllers.util.PaginationHelper;
+import ch.hearc.hememe.entities.Users;
 import ch.hearc.hememe.facades.CommentsFacade;
 import ch.hearc.hememe.facades.PostsFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -31,6 +33,16 @@ public class PostsController implements Serializable {
     private ch.hearc.hememe.facades.PostsFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    private String titleSearch;
+
+    public String getTitleSearch() {
+        return titleSearch;
+    }
+
+    public void setTitleSearch(String titleSearch) {
+        this.titleSearch = titleSearch;
+    }
 
     public PostsController() {
     }
@@ -82,10 +94,29 @@ public class PostsController implements Serializable {
         return "Create";
     }
 
-    public String create() {
+    public void incNbLike(int id) {
+
+        current = getPosts(id);
+        current.setNbLike(current.getNbLike() + 1);
+        ejbFacade.edit(current);        
+        recreateModel();
+    }
+
+    public void decNbLike(int id) {
+        current = getPosts(id);
+        current.setNbLike(current.getNbLike() - 1);
+        ejbFacade.edit(current);        
+        recreateModel();
+    }
+    
+    
+
+    public String create(Users users) {
         try {
+            current.setUserId(users);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PostsCreated"));
+            recreateModel();
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));

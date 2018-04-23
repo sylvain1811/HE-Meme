@@ -25,7 +25,8 @@
                             <a class="nav-link" href="/HE-Meme">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <h:form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_title"/>
+                            <h:inputText class="form-control mr-sm-2" value="#{postsController.titleSearch}"/>
+<!--                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_title"/>-->
                             <h:commandButton class="btn btn-outline-light my-2 my-sm-0" action="#{postsController.searchByTitle()}" value="Search"/>
                         </h:form>
                     </ul>
@@ -56,15 +57,11 @@
                         <br></br>
                         <br></br>
                         <div class="list-group">
+                        <ui:repeat var="item" value="#{categoriesController.items}">
                             <a href="#" class="list-group-item">
-                                <i class="fa fa-comment-o"></i> HE-ARC
+                                <i class="fa fa-comment-o"></i> #{item}
                             </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-search"></i> Car
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-user"></i> Girl
-                            </a>
+                        </ui:repeat>
                         </div>
 
                     </div>

@@ -28,14 +28,10 @@
                             <div class="container">
                                 <div class="row">
                                     <p class="card-text"> Like <span class="badge badge-dark">#{item.nbLike}</span>
-                                        
+
                                         <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-outline-dark">
-                                                UP
-                                            </button>
-                                            <button type="button" class="btn btn-outline-dark">
-                                                DOWN
-                                            </button>
+                                            <h:commandButton action="#{postsController.incNbLike(item.id)}" class="btn btn-outline-dark" value="UP" />
+                                            <h:commandButton action="#{postsController.decNbLike(item.id)}" class="btn btn-outline-dark" value="DOWN" />
                                         </div>
                                     </p>
                                 </div>

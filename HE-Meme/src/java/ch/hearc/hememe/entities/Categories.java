@@ -109,7 +109,7 @@ public class Categories implements Serializable {
 
     @Override
     public String toString() {
-        return "ch.hearc.hememe.entities.Categories[ id=" + id + " ]";
+        return name;
     }
     
 }

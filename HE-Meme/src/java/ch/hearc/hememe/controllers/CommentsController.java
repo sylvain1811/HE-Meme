@@ -90,6 +90,7 @@ public class CommentsController implements Serializable {
         comments.setContent(current.getContent());
         comments.setNbLike(0);
         getFacade().create(comments);
+        recreateModel();
     }
 
     public String create() {
