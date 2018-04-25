@@ -42,3 +42,5 @@ web/WEB-INF/glassfish-resources.xml
 
 # End of https://www.gitignore.io/api/java,netbeans,java-web
 /HE-Meme/nbproject/private/
+
+lib/

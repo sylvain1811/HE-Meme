@@ -8,10 +8,8 @@
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title><ui:insert name="title">HE-Meme</ui:insert></title>
-        <!--        <h:outputStylesheet library="css" name="bootstrap/dist/css/bootstrap.min.css"/>-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous"/>
     </h:head>
-
     <h:body>
         <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -25,14 +23,12 @@
                             <a class="nav-link" href="/HE-Meme">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <h:form class="form-inline">
-                            <h:inputText class="form-control mr-sm-2" value="#{postsController.titleSearch}"/>
-<!--                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_title"/>-->
-                            <h:commandButton class="btn btn-outline-light my-2 my-sm-0" action="#{postsController.searchByTitle()}" value="Search"/>
+                            <h:inputText class="form-control mr-sm-2" value="#{searchBean.pattern}"/>
+                            <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search_title"/>-->
+                            <h:commandButton class="btn btn-outline-light my-2 my-sm-0" action="#{searchBean.search()}" value="Search"/>
                         </h:form>
                     </ul>
-
                 </div>
-
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item mr-2">
                         <h:link style="color: white" outcome="/faces/login.xhtml" value="Login" rendered="#{empty request.remoteUser}"/>
@@ -44,7 +40,6 @@
                         <h:link style="color: white" outcome="/faces/logout.xhtml" value="Logout" rendered="#{request.remoteUser != null}"/>
                     </li>
                 </ul>
-
             </div>
         </nav>
         <!-- /.navbar -->
@@ -57,11 +52,11 @@
                         <br></br>
                         <br></br>
                         <div class="list-group">
-                        <ui:repeat var="item" value="#{categoriesController.items}">
-                            <a href="#" class="list-group-item">
-                                <i class="fa fa-comment-o"></i> #{item}
-                            </a>
-                        </ui:repeat>
+                            <ui:repeat var="item" value="#{categoriesController.items}">
+                                <a href="#" class="list-group-item">
+                                    <i class="fa fa-comment-o"></i> #{item}
+                                </a>
+                            </ui:repeat>
                         </div>
 
                     </div>
@@ -75,7 +70,6 @@
                         <br></br>
                         <ui:insert name="body">Default Body</ui:insert>
                     </div>
-
                 </div>
             </div>
             <!--/row-->
