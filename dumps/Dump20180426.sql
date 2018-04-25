@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `hememedb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `hememedb`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: hememedb
@@ -26,7 +28,7 @@ CREATE TABLE `categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -35,7 +37,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Animals'),(2,'Car'),(3,'HE-Arc'),(4,'Girl');
+INSERT INTO `categories` VALUES (1,'Animals'),(2,'Car'),(3,'HE-Arc'),(4,'Girl'),(5,'Landscape');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,7 +59,7 @@ CREATE TABLE `comments` (
   KEY `postid_idx` (`post_id`),
   CONSTRAINT `comment_post_id` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `comment_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +68,7 @@ CREATE TABLE `comments` (
 
 LOCK TABLES `comments` WRITE;
 /*!40000 ALTER TABLE `comments` DISABLE KEYS */;
-INSERT INTO `comments` VALUES (1,1,1,'Great car',1),(2,2,1,'So much speed',2),(16,2,1,'such wow',0);
+INSERT INTO `comments` VALUES (1,1,1,'Tellement drôle !',1),(2,5,1,'Yann marguet on l\'adore',2),(16,4,1,'Tout les lundis c\'est sexomax !',0),(25,2,2,'Beauty',0);
 /*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +117,7 @@ CREATE TABLE `posts` (
   KEY `post_category_id_idx` (`category_id`),
   CONSTRAINT `post_category_id` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `post_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +126,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` VALUES (1,1,3,'penis.jpg','Est-ce que ca joue ?',20,NULL),(2,2,2,'car.jpg','Supercar',11,NULL);
+INSERT INTO `posts` VALUES (1,1,3,'penis.jpg','Est-ce que ca joue ?',38,NULL),(2,3,2,'car.jpg','Supercar',14,NULL),(17,3,3,'jee.jpg','JEE',2,NULL),(18,4,4,'paysage.jpg','Joli paysage',3,NULL),(19,5,1,'rhino.jpg','Rhinocéros',2,NULL),(20,5,3,'masque.jpg','Masque de plongée',100,NULL),(21,4,1,'poisson.jpg','Poisson moche',10,NULL),(22,3,3,'webgl.jpg','Meilleur cours de l\'école ?',-101,NULL),(23,3,4,'ww.jpg','Wonder Woman',1,NULL),(24,4,1,'singe.jpg','Singe pensif',1,NULL),(25,5,4,'lena.jpg','Lena',9,NULL),(26,4,1,'dauphin.jpg','Dauphin',1,NULL);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,7 +171,7 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +180,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'francknoir','franck.noir@rts.ch','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',NULL),(2,'admin1','admin1@hememe.ch','03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4','2018-04-12 09:08:47');
+INSERT INTO `users` VALUES (1,'Franck','franck@rts.ch','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',NULL),(2,'Sylvain','sylvain@hememe.ch','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','2018-04-12 09:08:47'),(3,'Sexomax','sexo@rts.ch','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','2018-04-25 16:44:08'),(4,'Laurent','laurent@hememe.ch','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','2018-04-25 16:44:08'),(5,'Thibaut','thibaut@hememe.ch','5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8','2018-04-25 16:44:08');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -223,4 +225,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-23 13:36:17
+-- Dump completed on 2018-04-26  0:16:12
