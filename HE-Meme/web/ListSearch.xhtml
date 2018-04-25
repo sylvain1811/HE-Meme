@@ -12,20 +12,19 @@
         <ui:define name="body">
             <h:form class="">
                 <ui:repeat value="#{searchBean.items}" var="item">
-                    <div class="card" style="width: 75%;">
+                    <div class="card mb-4" style="width: 60%;">
                         <div class="card-body">
                             <h5 class="card-title"><h:commandLink action="#{postsController.prepareView}" value="#{item.title}"></h:commandLink></h5>
-                            <img class="card-img-top" src="/HE-Meme/faces/resources/image/#{item.imageName}" alt="Card image cap"/>
-                        </div>
-                        <div class="container">
-                            <div class="row">
-                                <p class="card-text"> Like <span class="badge badge-dark">#{item.nbLike}</span>
-
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <h:commandButton action="#{postsController.incNbLike(item.id)}" class="btn btn-outline-dark" value="UP" />
-                                        <h:commandButton action="#{postsController.decNbLike(item.id)}" class="btn btn-outline-dark" value="DOWN" />
-                                    </div>
-                                </p>
+                            <h:graphicImage class="card-img-top" name="/image/#{item.imageName}" alt="Card image cap"/>
+                            <div class="container mt-2">
+                                <div class="row">
+                                    <p class="card-text"> Likes <span class="badge badge-bg badge-dark">#{item.nbLike}</span>
+                                        <div style="width: 35%;height: 40%; position: relative; right: -2% " class="btn-group" role="group" aria-label="Basic example">
+                                            <h:commandLink action="#{postsController.incNbLike(item.id)}" class="btn btn-sm btn-outline-dark" value="" ><h:graphicImage style="width: 20%; height: auto;" name="/image/thumbs_up.png" alt="thumbs up"/></h:commandLink>
+                                            <h:commandLink action="#{postsController.decNbLike(item.id)}" class="btn btn-sm btn-outline-dark" value="" ><h:graphicImage style="width: 20%; height: auto;" name="/image/thumbs_down.png" alt="thumbs down"/></h:commandLink>
+                                        </div>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

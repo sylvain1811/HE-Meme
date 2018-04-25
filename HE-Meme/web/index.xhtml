@@ -1,23 +1,50 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:h="http://xmlns.jcp.org/jsf/html"
-                template="/template.xhtml">
-    <ui:define name="body">
-        <h1>
-            <ui:insert name="title">Default Title</ui:insert>
-        </h1>
-        <p>
-            <ui:insert name="body">Default Body</ui:insert>
-        </p>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-        <h:link outcome="/crud/categories/List" value="Show All Categories Items"/>
-        <br />
-        <h:link outcome="/crud/comments/List" value="Show All Comments Items"/>
-        <br />
-        <h:link outcome="/crud/groups/List" value="Show All Groups Items"/>
-        <br />
-        <h:link outcome="/crud/posts/List" value="Show All Posts Items"/>
-        <br />
-        <h:link outcome="/crud/users/List" value="Show All Users Items"/>
-    </ui:define>
-</ui:composition>
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPostsTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form class="">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListPostsEmpty}" rendered="#{postsController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{postsController.items.rowCount > 0}" class="">
+                    <h:outputText value="#{postsController.pagination.pageFirstItem + 1}..#{postsController.pagination.pageLastItem + 1}/#{postsController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{postsController.previous}" value="#{bundle.Previous} #{postsController.pagination.pageSize}" rendered="#{postsController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{postsController.next}" value="#{bundle.Next} #{postsController.pagination.pageSize}" rendered="#{postsController.pagination.hasNextPage}"/>&nbsp;
+                    <ui:repeat value="#{postsController.items}" var="item">
+                        <div class="card mb-4" style="width: 60%;">
+                            <div class="card-body">
+                                <h5 class="card-title"><h:commandLink action="#{postsController.prepareView}" value="#{item.title}"></h:commandLink></h5>
+                                <h:graphicImage class="card-img-top" name="/image/#{item.imageName}" alt="Card image cap"/>
+                                <div class="container mt-2">
+                                    <div class="row">
+                                        <p class="card-text"> Likes <span class="badge badge-bg badge-dark">#{item.nbLike}</span>
+                                            <div style="width: 35%;height: 40%; position: relative; right: -2% " class="btn-group" role="group" aria-label="Basic example">
+                                                <h:commandLink action="#{postsController.incNbLike(item.id)}" class="btn btn-sm btn-outline-dark" value="" ><h:graphicImage style="width: 20%; height: auto;" name="/image/thumbs_up.png" alt="thumbs up"/></h:commandLink>
+                                                <h:commandLink action="#{postsController.decNbLike(item.id)}" class="btn btn-sm btn-outline-dark" value="" ><h:graphicImage style="width: 20%; height: auto;" name="/image/thumbs_down.png" alt="thumbs down"/></h:commandLink>
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{postsController.prepareCreate}" value="#{bundle.ListPostsCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListPostsIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
